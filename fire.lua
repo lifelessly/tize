@@ -3,9 +3,10 @@
 local Players = game:GetService("Players")
 local TextChatService = game:GetService("TextChatService")
 local player = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 
 -- Show notification
-player:WaitForChild("PlayerGui"):SetCore("SendNotification", {
+StarterGui:SetCore("SendNotification", {
     Title = "Notification";
     Text = "made by deadly";
     Duration = 5; -- Duration in seconds
@@ -38,7 +39,7 @@ local function transformText(inputText)
     end
 
     -- Replace spaces with a space followed by a combining tilde (U+0303)
-    transformedText = string.gsub(transformedText, " ", " ⍜")  -- U+0303 is represented as a combining tilde
+    transformedText = string.gsub(transformedText, " ", " ̃")  -- Using the combining tilde directly
 
     return transformedText
 end
