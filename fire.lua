@@ -4,22 +4,12 @@ local Players = game:GetService("Players")
 local TextChatService = game:GetService("TextChatService")
 local player = Players.LocalPlayer
 
--- Show notification
-local function showNotification(title, text, duration)
-    local success, err = pcall(function()
-        player:WaitForChild("PlayerGui"):SetCore("SendNotification", {
-            Title = title;
-            Text = text;
-            Duration = duration; -- Duration in seconds
-        })
-    end)
-
-    if not success then
-        warn("Failed to send notification: " .. err)
-    end
-end
-
-showNotification("Notification", "made by deadly", 5)
+-- Show a simple working notification
+player.PlayerGui:SetCore("SendNotification", {
+    Title = "Welcome";
+    Text = "Script activated: Text transformation is now enabled.";
+    Duration = 5; -- Duration in seconds
+})
 
 -- Specific letter transformations
 local letterTransformations = {
