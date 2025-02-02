@@ -1,15 +1,6 @@
--- LocalScript to automatically transform and send messages to chat
-
 local Players = game:GetService("Players")
 local TextChatService = game:GetService("TextChatService")
 local player = Players.LocalPlayer
-
--- Show a simple working notification
-player.PlayerGui:SetCore("SendNotification", {
-    Title = "Welcome";
-    Text = "Script activated: Text transformation is now enabled.";
-    Duration = 5; -- Duration in seconds
-})
 
 -- Specific letter transformations
 local letterTransformations = {
@@ -24,7 +15,7 @@ local letterTransformations = {
     y = "у", -- Keep capital Y unchanged
     B = "В",  -- Replace uppercase 'B'
     S = "Ѕ",  -- Replace uppercase 'S'
-    N = "Ν"   -- Replace capital 'N'
+    N = "Ν"   -- Replace capital 'N' with 'Ν'
 }
 
 -- Function to transform text
@@ -37,8 +28,8 @@ local function transformText(inputText)
         transformedText = transformedText .. (letterTransformations[char] or char)
     end
 
-    -- Replace spaces with a space followed by a combining tilde (U+0303)
-    transformedText = string.gsub(transformedText, " ", " ̃")  -- Using the combining tilde directly
+    -- Replace spaces with ' ̃'
+    transformedText = string.gsub(transformedText, " ", " ̃")
 
     return transformedText
 end
@@ -52,4 +43,4 @@ local function onPlayerChatted(message)
 end
 
 -- Connect the chat event
-player.Chatted:Connect(onPlayerChatted)
+player.Chatted:Connect(onPlayerChatted))
