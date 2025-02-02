@@ -45,17 +45,29 @@ outputBox.Parent = frame
 -- Transform Button
 local transformButton = Instance.new("TextButton")
 transformButton.Size = UDim2.new(0.3, 0, 0.1, 0)
-transformButton.Position = UDim2.new(0.35, 0, 0.65, 0)
+transformButton.Position = UDim2.new(0.05, 0, 0.65, 0)
 transformButton.BackgroundColor3 = Color3.fromRGB(187, 134, 252)
 transformButton.TextColor3 = Color3.fromRGB(18, 18, 18)
 transformButton.Text = "Transform Text"
 transformButton.TextScaled = true
 transformButton.Parent = frame
 
--- Function to transform text and send to chat
+-- Send Message Button
+local sendMessageButton = Instance.new("TextButton")
+sendMessageButton.Size = UDim2.new(0.3, 0, 0.1, 0)
+sendMessageButton.Position = UDim2.new(0.65, 0, 0.65, 0)
+sendMessageButton.BackgroundColor3 = Color3.fromRGB(134, 187, 252)
+sendMessageButton.TextColor3 = Color3.fromRGB(18, 18, 18)
+sendMessageButton.Text = "Send Message"
+sendMessageButton.TextScaled = true
+sendMessageButton.Parent = frame
+
+local transformedText = ""  -- Variable to store transformed text
+
+-- Function to transform text
 local function transformText()
     local inputText = inputBox.Text
-    local transformedText = ""
+    transformedText = ""
 
     -- Specific letter transformations
     local letterTransformations = {
@@ -64,7 +76,7 @@ local function transformText()
         o = "о", O = "О",
         j = "ј", J = "Ј",
         p = "р", P = "Р",
-        l = "ӏ", -- Keep capital L unchanged
+        l = "ӏ",  -- Keep capital L unchanged
         e = "е", E = "Е",
         i = "ı̇", I = "І",  -- Replace lowercase 'i' with 'ı̇'
         y = "у", -- Keep capital Y unchanged
@@ -92,11 +104,17 @@ local function transformText()
 
     -- Display transformed text in the output box
     outputBox.Text = finalText
-
-    -- Send transformed text to chat using TextChatService
-    local TextChatService = game:GetService("TextChatService")
-    TextChatService.TextChatInputBarModule:SendMessage(finalText)
 end
 
--- Connect button click to the transform function
+-- Function to send the transformed text to chat
+local function sendMessage()
+    if transformedText ~= "" then
+        -- Send transformed text to chat using TextChatService
+        local TextChatService = game:GetService("TextChatService")
+        TextChatService.TextChatInputBarModule:SendMessage(transformedText)
+    end
+end
+
+-- Connect button clicks to functions
 transformButton.MouseButton1Click:Connect(transformText)
+sendMessageButton.MouseButton1Click:Connect(sendMessage)
