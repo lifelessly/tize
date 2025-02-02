@@ -4,6 +4,13 @@ local Players = game:GetService("Players")
 local TextChatService = game:GetService("TextChatService")
 local player = Players.LocalPlayer
 
+-- Show notification
+player:WaitForChild("PlayerGui"):SetCore("SendNotification", {
+    Title = "Notification";
+    Text = "made by deadly";
+    Duration = 5; -- Duration in seconds
+})
+
 -- Specific letter transformations
 local letterTransformations = {
     c = "с", C = "С",
@@ -16,7 +23,8 @@ local letterTransformations = {
     i = "ı̇", I = "І",  -- Replace lowercase 'i' with 'ı̇'
     y = "у", -- Keep capital Y unchanged
     B = "В",  -- Replace uppercase 'B'
-    S = "Ѕ"   -- Replace uppercase 'S'
+    S = "Ѕ",  -- Replace uppercase 'S'
+    N = "Ν"   -- Replace capital 'N'
 }
 
 -- Function to transform text
@@ -32,16 +40,7 @@ local function transformText(inputText)
     -- Replace spaces with ' ̃'
     transformedText = string.gsub(transformedText, " ", " ̃")
 
-    -- Randomly add line break character (U+2028) in the middle of words with a 5% chance
-    local finalText = ""
-    for i = 1, #transformedText do
-        finalText = finalText .. transformedText:sub(i, i)
-        if math.random() < 0.05 then -- 5% chance
-            finalText = finalText .. "\u{2028}" -- Add line break character
-        end
-    end
-
-    return finalText
+    return transformedText
 end
 
 -- Function to listen for player chat input
