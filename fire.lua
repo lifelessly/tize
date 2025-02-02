@@ -55,19 +55,27 @@ transformButton.Parent = frame
 -- Function to transform text and send to chat
 local function transformText()
     local inputText = inputBox.Text
-    local transformedText = inputText
+    local transformedText = ""
 
-    -- Letter transformations
+    -- Specific letter transformations
     local letterTransformations = {
-        c = "с", C = "С", a = "а", A = "А",
-        o = "о", O = "О", j = "ј", p = "р",
-        l = "ӏ", e = "е", i = "ı̇", I = "І",
-        y = "у", B = "В", S = "Ѕ"
+        c = "с", C = "С",
+        a = "а", A = "А",
+        o = "о", O = "О",
+        j = "ј", J = "Ј",
+        p = "р", P = "Р",
+        l = "ӏ", -- Keep capital L unchanged
+        e = "е", E = "Е",
+        i = "ı̇", I = "І",  -- Replace lowercase 'i' with 'ı̇'
+        y = "у", -- Keep capital Y unchanged
+        B = "В",  -- Replace uppercase 'B'
+        S = "Ѕ"   -- Replace uppercase 'S'
     }
 
     -- Apply letter transformations
-    for original, replacement in pairs(letterTransformations) do
-        transformedText = string.gsub(transformedText, original, replacement)
+    for i = 1, #inputText do
+        local char = inputText:sub(i, i)
+        transformedText = transformedText .. (letterTransformations[char] or char)
     end
 
     -- Replace spaces with ' ̃'
@@ -85,8 +93,9 @@ local function transformText()
     -- Display transformed text in the output box
     outputBox.Text = finalText
 
-    -- Send transformed text to chat
-    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(finalText, "All")
+    -- Send transformed text to chat using TextChatService
+    local TextChatService = game:GetService("TextChatService")
+    TextChatService.TextChatInputBarModule:SendMessage(finalText)
 end
 
 -- Connect button click to the transform function
