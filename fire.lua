@@ -37,8 +37,8 @@ local function transformText(inputText)
         transformedText = transformedText .. (letterTransformations[char] or char)
     end
 
-    -- Replace spaces with ' ̃'
-    transformedText = string.gsub(transformedText, " ", " ̃")
+    -- Replace spaces with a space followed by a combining tilde (U+0303)
+    transformedText = string.gsub(transformedText, " ", " ⍜")  -- U+0303 is represented as a combining tilde
 
     return transformedText
 end
